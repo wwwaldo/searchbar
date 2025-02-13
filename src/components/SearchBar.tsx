@@ -45,7 +45,6 @@ const SearchInput = styled.div<{ isFocused: boolean }>`
   }
 `;
 
-// Arrow icon that appears on the right side of the input
 const UpArrowIcon = styled.div<{ isFocused: boolean }>`
   width: 1.25rem;
   height: 1.25rem;
@@ -61,51 +60,6 @@ const UpArrowIcon = styled.div<{ isFocused: boolean }>`
     width: 1rem;
     height: 1rem;
   }
-`;
-
-// Mic button
-const MicButton = styled.button<{ isFocused: boolean }>`
-  background: none;
-  border: none;
-  color: #8e8ea0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  opacity: ${props => props.isFocused ? "1" : "0.7"};
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: #ffffff;
-    transform: scale(1.1);
-  }
-
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-`;
-
-// Tooltip for mic button
-const Tooltip = styled.div<{ isVisible: boolean }>`
-  position: absolute;
-  top: -2.5rem;
-  right: 0;
-  background: rgba(32, 33, 35, 0.9);
-  backdrop-filter: blur(0.5rem);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  color: #ffffff;
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? '0' : '0.5rem'});
-  transition: all 0.2s ease;
-  pointer-events: none;
-  white-space: nowrap;
 `;
 
 interface SearchBarProps {
@@ -126,7 +80,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [mouseDownOnBar, setMouseDownOnBar] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
 
   // Handle Enter key press
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -149,13 +102,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
       setIsFocused(false);
     }
     setMouseDownOnBar(false);
-  };
-
-  // Handle mic button click
-  const handleMicClick = () => {
-    const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-    setShowTooltip(true);
-    setTimeout(() => setShowTooltip(false), 3000);
   };
 
   return (
@@ -182,28 +128,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
             <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
           </svg>
         </UpArrowIcon>
-        <MicButton 
-          isFocused={isFocused}
-          onClick={handleMicClick}
-          aria-label="Start dictation"
-        >
-          <Tooltip isVisible={showTooltip}>
-            Press {/Mac|iPod|iPhone|iPad/.test(navigator.platform) ? 'Fn twice' : 'Win+H'} to dictate
-          </Tooltip>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-            <line x1="12" y1="19" x2="12" y2="23" />
-            <line x1="8" y1="23" x2="16" y2="23" />
-          </svg>
-        </MicButton>
       </SearchInput>
     </SearchContainer>
   );
