@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 
+/**
+ * Container component that manages the floating search bar and its animations.
+ * Handles keyboard shortcuts (Shift+Space) for toggling visibility.
+ * 
+ * Features:
+ * - Smooth fade in/out animations
+ * - Scale and blur effects
+ * - Keyboard shortcut handling
+ * - Centered positioning
+ */
 const Container = styled.div<{ isVisible: boolean }>`
   position: fixed;
   bottom: 1rem;
@@ -15,12 +25,17 @@ const Container = styled.div<{ isVisible: boolean }>`
   scale: ${props => props.isVisible ? 1 : 0.95};
 `;
 
+/**
+ * SearchContainer component that renders the search bar and handles its visibility.
+ * 
+ * @returns JSX.Element
+ */
 export const SearchContainer: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Check for Shift + Space
+      // Toggle visibility on Shift+Space
       if (e.shiftKey && e.code === 'Space') {
         e.preventDefault(); // Prevent space from scrolling
         setIsVisible(prev => !prev);

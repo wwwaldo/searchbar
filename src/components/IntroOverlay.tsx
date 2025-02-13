@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+/**
+ * Styled overlay component with blur effect and fade animations.
+ * Displays a centered message with keyboard shortcut instructions.
+ */
 const Overlay = styled.div<{ isVisible: boolean }>`
   position: fixed;
   top: 0;
@@ -18,6 +22,9 @@ const Overlay = styled.div<{ isVisible: boolean }>`
   z-index: 1000;
 `;
 
+/**
+ * Styled message container with Apple-style typography.
+ */
 const Message = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
@@ -30,6 +37,9 @@ const Message = styled.div`
   }
 `;
 
+/**
+ * Styled keyboard shortcut key display.
+ */
 const ShortcutKey = styled.span`
   background: rgba(255, 255, 255, 0.1);
   padding: 0.25rem 0.75rem;
@@ -49,6 +59,17 @@ interface IntroOverlayProps {
   onDismiss: () => void;
 }
 
+/**
+ * IntroOverlay component that displays initial instructions.
+ * Handles keyboard interactions for dismissal.
+ * 
+ * Features:
+ * - Dismisses on any key except lone Shift
+ * - Smooth fade out animation
+ * - Apple-style design
+ * 
+ * @param props.onDismiss Callback when overlay should be removed
+ */
 export const IntroOverlay: React.FC<IntroOverlayProps> = ({ onDismiss }) => {
   const [isVisible, setIsVisible] = useState(true);
 
