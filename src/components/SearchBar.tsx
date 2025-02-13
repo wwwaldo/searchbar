@@ -16,8 +16,8 @@ const SearchInput = styled.div<{ isFocused: boolean }>`
   display: flex;
   align-items: center;
   background-color: rgba(64, 65, 79, 0.9);
-  border-radius: 0.75rem;
-  padding: 0.625rem 1.25rem;
+  border-radius: 1.5rem;
+  padding: 0.625rem 0.75rem;
   width: ${props => props.isFocused ? "37.5rem" : "18.75rem"};  // Expands on focus
   height: 3rem;
   backdrop-filter: blur(0.5rem);
@@ -38,6 +38,7 @@ const SearchInput = styled.div<{ isFocused: boolean }>`
     font-size: 1.25rem;
     outline: none;
     width: 100%;
+    padding: 0 0.75rem;
     
     &::placeholder {
       color: #8e8ea0;
@@ -46,19 +47,26 @@ const SearchInput = styled.div<{ isFocused: boolean }>`
 `;
 
 const UpArrowIcon = styled.div<{ isFocused: boolean }>`
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #8e8ea0;
-  margin-left: 0.5rem;
   opacity: ${props => props.isFocused ? "1" : "0.7"};
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  padding: 0.5rem;
 
   svg {
     width: 1rem;
     height: 1rem;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
   }
 `;
 
@@ -75,7 +83,7 @@ interface SearchBarProps {
  */
 const SearchBar: React.FC<SearchBarProps> = ({ 
   onEnter, 
-  placeholder = "Ask ChatGPT" 
+  placeholder = "Type to search..." 
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
