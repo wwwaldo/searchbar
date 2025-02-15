@@ -56,7 +56,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({ onSearch }) =>
 
   return (
     <Container isVisible={isVisible}>
-      <SearchBar onEnter={handleSearch} />
+      <SearchBar onEnter={handleSearch} shouldFocus={isVisible} />
     </Container>
   );
 };

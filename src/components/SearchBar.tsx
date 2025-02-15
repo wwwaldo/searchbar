@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent, MouseEvent } from 'react';
+import React, { useState, KeyboardEvent, MouseEvent, useEffect } from 'react';
 import styled from 'styled-components';
 
 // Container that positions the search bar at the bottom of the viewport
@@ -75,6 +75,8 @@ interface SearchBarProps {
   onEnter?: (value: string) => void;
   /** Placeholder text for the input field */
   placeholder?: string;
+  /** Whether to automatically focus the input */
+  shouldFocus?: boolean;
 }
 
 /**
@@ -83,7 +85,8 @@ interface SearchBarProps {
  */
 const SearchBar: React.FC<SearchBarProps> = ({ 
   onEnter, 
-  placeholder = "Type to search..." 
+  placeholder = "Type to search...",
+  shouldFocus = false
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -112,6 +115,14 @@ const SearchBar: React.FC<SearchBarProps> = ({
     setMouseDownOnBar(false);
   };
 
+  // Focus input when shouldFocus becomes true
+  useEffect(() => {
+    if (shouldFocus) {
+      const input = document.querySelector<HTMLInputElement>('.search-input');
+      input?.focus();
+    }
+  }, [shouldFocus]);
+
   return (
     <SearchContainer isFocused={isFocused}>
       <SearchInput 
@@ -119,6 +130,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         onMouseDown={handleMouseDown}
       >
         <input
+          className="search-input"
           type="text"
           placeholder={placeholder}
           value={inputValue}
@@ -126,6 +138,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}
           onBlur={handleBlur}
+          autoFocus={shouldFocus}
         />
         <UpArrowIcon isFocused={isFocused}>
           <svg
