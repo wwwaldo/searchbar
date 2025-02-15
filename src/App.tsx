@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { SearchContainer } from './components/SearchContainer';
 import { IntroOverlay } from './components/IntroOverlay';
+import { ToastContainer } from './components/ToastContainer';
+import { useToast } from './hooks/useToast';
 import styled from 'styled-components';
 
 const ZenMessage = styled.div`
@@ -36,6 +38,7 @@ const AppContainer = styled.div`
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const { toasts, addToast, removeToast } = useToast();
 
   return (
     <AppContainer>
@@ -44,7 +47,8 @@ function App() {
         <h1>🧘‍♂️ breathe</h1>
         <p>the search will come to you</p>
       </ZenMessage>
-      <SearchContainer />
+      <SearchContainer onSearch={(value) => addToast(`Searching: ${value}`)} />
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </AppContainer>
   );
 }

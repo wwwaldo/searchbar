@@ -25,12 +25,16 @@ const Container = styled.div<{ isVisible: boolean }>`
   scale: ${props => props.isVisible ? 1 : 0.95};
 `;
 
+interface SearchContainerProps {
+  onSearch?: (value: string) => void;
+}
+
 /**
  * SearchContainer component that renders the search bar and handles its visibility.
  * 
  * @returns JSX.Element
  */
-export const SearchContainer: React.FC = () => {
+export const SearchContainer: React.FC<SearchContainerProps> = ({ onSearch }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -46,9 +50,13 @@ export const SearchContainer: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const handleSearch = (value: string) => {
+    onSearch?.(value);
+  };
+
   return (
     <Container isVisible={isVisible}>
-      <SearchBar />
+      <SearchBar onEnter={handleSearch} shouldFocus={isVisible} />
     </Container>
   );
 };
